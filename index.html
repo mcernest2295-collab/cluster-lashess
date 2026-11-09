@@ -4,10 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <meta name="description" content="Cluster Lashes by Yvonne — beautiful lash extensions in Madina, Ghana.">
   <meta name="theme-color" content="#fff4f9">
+
   <title>Cluster Lashes by Yvonne | Madina</title>
-  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 
 <body>
@@ -35,7 +38,7 @@
 
   <main>
 
-    <!-- BUSINESS PROFILE FIRST -->
+    <!-- BUSINESS PROFILE -->
     <section id="home" class="section about-owner">
 
       <div class="owner-photo">
@@ -44,7 +47,9 @@
 
       <div class="owner-copy">
         <p class="eyebrow">WELCOME TO MY BUSINESS</p>
+
         <h1>Cluster Lashes <span>by Yvonne.</span></h1>
+
         <h2>Your Beauty, My Passion.</h2>
 
         <p>
@@ -52,29 +57,41 @@
           your natural beauty and give you confidence.
         </p>
 
-        <p><strong>Location:</strong> Immanuel Presbyterian Church, Madina, Ghana.</p>
+        <p>
+          <strong>Location:</strong>
+          Immanuel Presbyterian Church, Madina, Ghana.
+        </p>
 
-        <p><strong>Call:</strong>
+        <p>
+          <strong>Call:</strong>
           <a href="tel:0241415612">024 141 5612</a>
         </p>
 
         <div class="actions">
+
           <a class="btn pink"
              href="https://wa.me/233241415612?text=Hello%20Yvonne%2C%20I%20would%20like%20to%20book%20a%20lash%20appointment."
-             target="_blank" rel="noopener">
+             target="_blank"
+             rel="noopener">
             Book on WhatsApp
           </a>
 
-          <a class="btn outline" href="#gallery">View My Work</a>
+          <a class="btn outline" href="#gallery">
+            View My Work
+          </a>
+
         </div>
 
-        <p class="signature">Quality lashes. Gentle touch. Beautiful you.</p>
+        <p class="signature">
+          Quality lashes. Gentle touch. Beautiful you.
+        </p>
       </div>
 
     </section>
 
-    <!-- INTRODUCTION SECOND -->
+    <!-- INTRODUCTION -->
     <section id="introduction" class="intro">
+
       <div>
         <span class="number">01</span>
         <h2>Beautiful lashes.<br><em>Confident you.</em></h2>
@@ -88,10 +105,12 @@
         Whether you prefer a natural look or something fuller and
         more dramatic, there's a lash style for you.
       </p>
+
     </section>
 
-    <!-- GALLERY THIRD -->
+    <!-- GALLERY -->
     <section id="gallery" class="section gallery-section">
+
       <div class="section-heading">
         <p class="eyebrow">MY WORK</p>
         <h2>Beautiful Lashes by <span>Yvonne.</span></h2>
@@ -99,6 +118,7 @@
       </div>
 
       <div class="work-gallery">
+
         <figure>
           <img src="lash-work-1.png" alt="Cluster Lashes client lash look">
           <figcaption>Soft &amp; Fluffy</figcaption>
@@ -118,16 +138,19 @@
           <img src="lash-work-4.png" alt="Cluster Lashes client lash look">
           <figcaption>Beautiful Finish</figcaption>
         </figure>
+
       </div>
 
       <div class="gallery-cta">
         <p>Love what you see? Book your lash appointment.</p>
         <a class="btn primary" href="#contact">Book With Yvonne</a>
       </div>
+
     </section>
 
-    <!-- SERVICES FOURTH -->
+    <!-- SERVICES -->
     <section id="services" class="services">
+
       <div class="heading">
         <p class="eyebrow">THE MENU</p>
         <h2>Choose Your <em>Lash Look</em></h2>
@@ -179,13 +202,16 @@
         </article>
 
       </div>
+
     </section>
 
-    <!-- BOOKING LAST -->
+    <!-- BOOKING SECTION -->
     <section id="contact" class="booking">
 
       <div class="booking-left">
+
         <p class="eyebrow">BOOK YOUR APPOINTMENT</p>
+
         <h2>Let's make your lashes <em>beautiful.</em></h2>
 
         <p>
@@ -193,19 +219,29 @@
           Your booking details will be sent to Yvonne on WhatsApp.
         </p>
 
-        <a class="big-phone" href="tel:0241415612">024 141 5612</a>
+        <a class="big-phone" href="tel:0241415612">
+          024 141 5612
+        </a>
+
       </div>
 
       <div class="booking-card">
+
         <h3>Book With Yvonne</h3>
 
         <form id="bookingForm" class="booking-details">
 
           <label for="customerName">Your Full Name</label>
-          <input type="text" id="customerName"
-                 placeholder="Enter your name" required>
+
+          <input
+            type="text"
+            id="customerName"
+            placeholder="Enter your name"
+            required
+          >
 
           <label for="serviceSelect">Choose Your Service</label>
+
           <select id="serviceSelect" required>
             <option value="">Select a lash service</option>
             <option value="Natural Set">Natural Set — GHS 28</option>
@@ -218,21 +254,37 @@
           </select>
 
           <label for="appointmentDate">Appointment Date</label>
-          <input type="date" id="appointmentDate" required>
+
+          <input
+            type="date"
+            id="appointmentDate"
+            required
+          >
 
           <label for="appointmentTime">Appointment Time</label>
-          <input type="time" id="appointmentTime" required>
+
+          <input
+            type="time"
+            id="appointmentTime"
+            required
+          >
 
           <p id="bookingSummary" aria-live="polite"></p>
 
-          <button type="submit" id="whatsappButton" class="btn pink full">
+          <!-- WHATSAPP BOOKING BUTTON -->
+          <button
+            type="submit"
+            id="whatsappButton"
+            class="btn pink full">
             Book on WhatsApp
           </button>
 
-          <p id="bookingConfirmation"
-             class="booking-confirmation"
-             role="status"
-             aria-live="polite"></p>
+          <p
+            id="bookingConfirmation"
+            class="booking-confirmation"
+            role="status"
+            aria-live="polite">
+          </p>
 
         </form>
 
@@ -248,7 +300,11 @@
           <span>👻</span>
           <div>
             <b>Snapchat</b>
-            <p><a href="https://snapchat.com/t/spe7JSnI" target="_blank" rel="noopener">yvonn_iee</a></p>
+            <p>
+              <a href="https://snapchat.com/t/spe7JSnI"
+                 target="_blank"
+                 rel="noopener">yvonn_iee</a>
+            </p>
           </div>
         </div>
 
@@ -256,9 +312,14 @@
           <span>♪</span>
           <div>
             <b>TikTok</b>
-            <p><a href="https://www.tiktok.com/@yvonn_iee" target="_blank" rel="noopener">@yvonn_iee</a></p>
+            <p>
+              <a href="https://www.tiktok.com/@yvonn_iee"
+                 target="_blank"
+                 rel="noopener">@yvonn_iee</a>
+            </p>
           </div>
         </div>
+
       </div>
 
     </section>
@@ -266,13 +327,19 @@
   </main>
 
   <footer>
+
     <div class="footer-brand">♡ Cluster Lashes</div>
+
     <p>Beautiful lashes. Confident you.</p>
-    <p>© <span id="year"></span> Cluster Lashes by Yvonne • Madina</p>
+
+    <p>
+      © <span id="year"></span>
+      Cluster Lashes by Yvonne • Madina
+    </p>
+
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
 
 </body>
 </html>
-```
