@@ -22,7 +22,7 @@ const servicePrices = {
 // =====================================
 
 const menuButton = document.querySelector(".menu");
-const navigation = document.querySelector("nav");
+const navigation = document.querySelector(".nav nav");
 
 if (menuButton && navigation) {
   menuButton.addEventListener("click", () => {
@@ -57,19 +57,30 @@ const appointmentDate = document.getElementById("appointmentDate");
 const appointmentTime = document.getElementById("appointmentTime");
 const bookingSummary = document.getElementById("bookingSummary");
 const bookingConfirmation = document.getElementById("bookingConfirmation");
+const whatsappButton = document.getElementById("whatsappButton");
+
+// FORCE CORRECT BUTTON TEXT
+
+if (whatsappButton) {
+  whatsappButton.textContent = "Book on WhatsApp";
+}
 
 // =====================================
 // PREVENT PAST APPOINTMENT DATES
 // =====================================
 
-if (appointmentDate) {
+function getTodayDate() {
   const now = new Date();
 
-  const today = new Date(
+  const localDate = new Date(
     now.getTime() - now.getTimezoneOffset() * 60000
-  ).toISOString().split("T")[0];
+  );
 
-  appointmentDate.min = today;
+  return localDate.toISOString().split("T")[0];
+}
+
+if (appointmentDate) {
+  appointmentDate.min = getTodayDate();
 }
 
 // =====================================
@@ -95,7 +106,7 @@ if (serviceSelect) {
 }
 
 // =====================================
-// DISPLAY MESSAGES
+// DISPLAY BOOKING MESSAGES
 // =====================================
 
 function showBookingMessage(message, error = false) {
@@ -104,15 +115,11 @@ function showBookingMessage(message, error = false) {
   bookingConfirmation.textContent = message;
   bookingConfirmation.classList.add("show");
 
-  if (error) {
-    bookingConfirmation.classList.add("error");
-  } else {
-    bookingConfirmation.classList.remove("error");
-  }
+  bookingConfirmation.classList.toggle("error", error);
 }
 
 // =====================================
-// WHATSAPP BOOKING
+// WHATSAPP BOOKING SYSTEM
 // =====================================
 
 if (bookingForm) {
@@ -121,6 +128,8 @@ if (bookingForm) {
 
     event.preventDefault();
 
+    // GET CUSTOMER DETAILS
+
     const name = customerName.value.trim();
     const service = serviceSelect.value;
     const date = appointmentDate.value;
@@ -128,7 +137,8 @@ if (bookingForm) {
 
     const price = servicePrices[service];
 
-    // CHECK CUSTOMER DETAILS
+    // CHECK REQUIRED FIELDS
+
     if (!name || !service || !date || !time) {
       showBookingMessage(
         "Please complete all the booking details.",
@@ -137,7 +147,8 @@ if (bookingForm) {
       return;
     }
 
-    // CHECK SERVICE
+    // CHECK VALID SERVICE
+
     if (price === undefined) {
       showBookingMessage(
         "Please select a valid lash service.",
@@ -147,12 +158,8 @@ if (bookingForm) {
     }
 
     // CHECK APPOINTMENT DATE
-    const selectedDate = new Date(date + "T00:00:00");
-    const today = new Date();
 
-    today.setHours(0, 0, 0, 0);
-
-    if (selectedDate < today) {
+    if (date < getTodayDate()) {
       showBookingMessage(
         "Please choose today or a future date.",
         true
@@ -160,7 +167,10 @@ if (bookingForm) {
       return;
     }
 
-    // FORMAT DATE
+    // FORMAT APPOINTMENT DATE
+
+    const selectedDate = new Date(date + "T00:00:00");
+
     const formattedDate = selectedDate.toLocaleDateString(
       "en-GB",
       {
@@ -170,33 +180,47 @@ if (bookingForm) {
       }
     );
 
+    // FORMAT APPOINTMENT TIME
+
+    const [hours, minutes] = time.split(":");
+
+    const formattedTime = new Date(
+      2000, 0, 1, Number(hours), Number(minutes)
+    ).toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true
+    });
+
     // CREATE WHATSAPP MESSAGE
+
     const message =
       "Hello Yvonne! I would like to book a lash appointment.\n\n" +
       "Customer Name: " + name + "\n" +
       "Service: " + service + "\n" +
       "Price: GHS " + price.toFixed(2) + "\n" +
       "Appointment Date: " + formattedDate + "\n" +
-      "Appointment Time: " + time + "\n\n" +
+      "Appointment Time: " + formattedTime + "\n\n" +
       "Please confirm if this appointment is available. Thank you!";
 
     // CREATE WHATSAPP LINK
+
     const whatsappLink =
       "https://wa.me/" +
       WHATSAPP_NUMBER +
       "?text=" +
       encodeURIComponent(message);
 
-    // SHOW MESSAGE
+    // SHOW CONFIRMATION
+
     showBookingMessage(
-      "Your booking details are ready. WhatsApp is opening so you can send your request to Yvonne."
+      "Opening WhatsApp with your appointment details..."
     );
 
-    // OPEN WHATSAPP
-    window.open(whatsappLink, "_blank");
+    // OPEN WHATSAPP IN THE SAME TAB
+
+    window.location.href = whatsappLink;
 
   });
 
 }
-
-```
