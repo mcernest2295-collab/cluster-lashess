@@ -1,52 +1,35 @@
-// FOOTER YEAR
-const year = document.getElementById("year");
+```javascript
+// SUPABASE CONNECTION
+const SUPABASE_URL = "https://amwrfbuclxghuzmsktvy.supabase.co";
+const SUPABASE_KEY = "sb_publishable_wFMy2zCyeA_X9b96u1doeQ_wu1Y_vtx";
 
-if (year) {
-  year.textContent = new Date().getFullYear();
-}
+const BOOKINGS_URL = `${SUPABASE_URL}/rest/v1/bookings`;
 
-// MOBILE NAVIGATION
-const menu = document.querySelector(".menu");
-const nav = document.querySelector("nav");
+// MOBILE MENU
+const menuButton = document.querySelector(".menu");
+const navigation = document.querySelector("nav");
 
-if (menu && nav) {
-  menu.addEventListener("click", () => {
-    const open = nav.classList.toggle("open");
-    nav.style.display = open ? "flex" : "none";
-
-    if (open) {
-      nav.style.flexDirection = "column";
-      nav.style.position = "absolute";
-      nav.style.top = "78px";
-      nav.style.right = "5%";
-      nav.style.background = "#fff";
-      nav.style.padding = "20px";
-      nav.style.borderRadius = "15px";
-      nav.style.boxShadow = "0 15px 35px #0002";
-    }
+if (menuButton && navigation) {
+  menuButton.addEventListener("click", () => {
+    navigation.classList.toggle("active");
   });
 
-  document.querySelectorAll("nav a").forEach(a => {
-    a.addEventListener("click", () => {
-      nav.classList.remove("open");
-      if (window.innerWidth <= 800) {
-        nav.style.display = "none";
-      }
+  navigation.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navigation.classList.remove("active");
     });
   });
 }
 
-// SUPABASE CONNECTION
-const SUPABASE_URL =
-  "https://amwrfbuclxghuzmsktvy.supabase.co";
+// AUTOMATIC FOOTER YEAR
+const yearElement = document.getElementById("year");
 
-const SUPABASE_KEY =
-  "sb_publishable_wFMy2zCyeA_X9b96u1doeQ_wu1Y_vtx";
-
-const SUPABASE_REST_URL =
-  SUPABASE_URL + "/rest/v1";
+if (yearElement) {
+  yearElement.textContent = new Date().getFullYear();
+}
 
 // BOOKING FORM
+const bookingForm = document.getElementById("bookingForm");
 const customerName = document.getElementById("customerName");
 const serviceSelect = document.getElementById("serviceSelect");
 const appointmentDate = document.getElementById("appointmentDate");
@@ -66,24 +49,26 @@ const servicePrices = {
   "Lash Removal": 14
 };
 
-// PREVENT PAST APPOINTMENT DATES
+// SET MINIMUM BOOKING DATE TO TODAY
 if (appointmentDate) {
   const today = new Date();
-  const localDate = new Date(
+  const localToday = new Date(
     today.getTime() - today.getTimezoneOffset() * 60000
   ).toISOString().split("T")[0];
 
-  appointmentDate.min = localDate;
+  appointmentDate.min = localToday;
 }
 
-// DISPLAY SELECTED SERVICE PRICE
+// DISPLAY BOOKING SUMMARY
 function updateBookingSummary() {
-  const selectedService = serviceSelect.value;
+  if (!bookingSummary || !serviceSelect) return;
 
-  if (selectedService && servicePrices[selectedService] !== undefined) {
+  const selectedService = serviceSelect.value;
+  const price = servicePrices[selectedService];
+
+  if (selectedService && price !== undefined) {
     bookingSummary.textContent =
-      "Selected service: " + selectedService +
-      " — GHS " + servicePrices[selectedService].toFixed(2);
+      `Selected service: ${selectedService} — GHS ${price.toFixed(2)}`;
   } else {
     bookingSummary.textContent = "";
   }
@@ -93,133 +78,131 @@ if (serviceSelect) {
   serviceSelect.addEventListener("change", updateBookingSummary);
 }
 
-// SHOW BOOKING MESSAGES
+// SHOW BOOKING MESSAGE
 function showBookingMessage(message, isError = false) {
+  if (!bookingConfirmation) return;
+
   bookingConfirmation.textContent = message;
-  bookingConfirmation.className = "booking-confirmation show";
+  bookingConfirmation.classList.add("show");
 
   if (isError) {
     bookingConfirmation.classList.add("error");
+  } else {
+    bookingConfirmation.classList.remove("error");
   }
 }
 
 // SUBMIT BOOKING
-if (whatsappButton) {
-  whatsappButton.addEventListener("click", async () => {
+if (bookingForm) {
+  bookingForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
     const name = customerName.value.trim();
     const service = serviceSelect.value;
     const date = appointmentDate.value;
     const time = appointmentTime.value;
+    const price = servicePrices[service];
 
-    bookingConfirmation.className = "booking-confirmation";
-    bookingConfirmation.textContent = "";
-
-    // CHECK REQUIRED FIELDS
     if (!name || !service || !date || !time) {
-      showBookingMessage(
-        "Please complete all booking details before submitting.",
-        true
-      );
+      showBookingMessage("Please complete all booking details.", true);
       return;
     }
 
-    // CHECK SERVICE
-    if (servicePrices[service] === undefined) {
+    if (price === undefined) {
       showBookingMessage("Please select a valid service.", true);
       return;
     }
 
-    // CHECK DATE
+    const selectedDate = new Date(`${date}T00:00:00`);
     const today = new Date();
-    const localDate = new Date(
-      today.getTime() - today.getTimezoneOffset() * 60000
-    ).toISOString().split("T")[0];
+    today.setHours(0, 0, 0, 0);
 
-    if (date < localDate) {
-      showBookingMessage(
-        "Please choose today or a future appointment date.",
-        true
-      );
+    if (selectedDate < today) {
+      showBookingMessage("Please select today or a future date.", true);
       return;
     }
 
-    const price = servicePrices[service];
+    const submitButton = bookingForm.querySelector(
+      'button[type="submit"]'
+    );
 
-    // BOOKING DETAILS
-    const bookingDetails = {
-      customer_name: name,
-      service: service,
-      price: price,
-      appointment_date: date,
-      appointment_time: time,
-      status: "Pending"
-    };
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Submitting...";
+    }
 
-    // OPEN A TAB FOR WHATSAPP
-    const whatsappWindow = window.open("about:blank", "_blank");
-
-    whatsappButton.disabled = true;
-    whatsappButton.textContent = "Submitting booking...";
+    if (bookingConfirmation) {
+      bookingConfirmation.classList.remove("show", "error");
+    }
 
     try {
-      // SAVE BOOKING TO SUPABASE
-      const response = await fetch(
-        SUPABASE_REST_URL + "/bookings",
-        {
-          method: "POST",
-          headers: {
-            "apikey": SUPABASE_KEY,
-            "Authorization": "Bearer " + SUPABASE_KEY,
-            "Content-Type": "application/json",
-            "Prefer": "return=minimal"
-          },
-          body: JSON.stringify(bookingDetails)
-        }
-      );
+      const response = await fetch(BOOKINGS_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`,
+          "Prefer": "return=minimal"
+        },
+        body: JSON.stringify({
+          customer_name: name,
+          service: service,
+          price: price,
+          appointment_date: date,
+          appointment_time: time,
+          status: "Pending"
+        })
+      });
 
       if (!response.ok) {
-        throw new Error("Booking could not be saved.");
+        const errorDetails = await response.text();
+        console.error("Booking error:", errorDetails);
+        throw new Error("Your booking could not be saved.");
       }
-
-      // CREATE WHATSAPP MESSAGE
-      const message =
-        "Hello Yvone! I would like to book a lash appointment.\n\n" +
-        "Name: " + name + "\n" +
-        "Service: " + service + "\n" +
-        "Price: GHS " + price.toFixed(2) + "\n" +
-        "Date: " + date + "\n" +
-        "Time: " + time + "\n\n" +
-        "Please confirm my appointment. Thank you!";
-
-      const whatsappLink =
-        "https://wa.me/233241415612?text=" +
-        encodeURIComponent(message);
 
       showBookingMessage(
-        "Your booking request has been saved successfully! Please send your WhatsApp message to Yvone to confirm your appointment."
+        "Your booking details have been saved successfully!"
       );
 
-      if (whatsappWindow) {
-        whatsappWindow.location.href = whatsappLink;
-      } else {
-        window.location.href = whatsappLink;
+      // OPEN WHATSAPP AFTER THE BOOKING IS SAVED
+      const message =
+        `Hello Yvonne! I would like to book an appointment.\n\n` +
+        `Name: ${name}\n` +
+        `Service: ${service}\n` +
+        `Price: GHS ${price.toFixed(2)}\n` +
+        `Date: ${date}\n` +
+        `Time: ${time}\n\n` +
+        `Please confirm my appointment.`;
+
+      const whatsappURL =
+        `https://wa.me/233241415612?text=${encodeURIComponent(message)}`;
+
+      if (whatsappButton) {
+        whatsappButton.href = whatsappURL;
+        whatsappButton.target = "_blank";
+        whatsappButton.rel = "noopener noreferrer";
+        whatsappButton.textContent = "Continue to WhatsApp";
+        whatsappButton.style.display = "block";
       }
+
+      window.open(whatsappURL, "_blank");
+
+      bookingForm.reset();
+      updateBookingSummary();
 
     } catch (error) {
-      if (whatsappWindow) {
-        whatsappWindow.close();
-      }
+      console.error(error);
 
       showBookingMessage(
-        "Sorry, we could not save your booking. Please try again or contact Yvone directly.",
+        "Sorry, your booking could not be saved. Please try again or contact us on WhatsApp.",
         true
       );
-
-      console.error("Booking error:", error);
-
     } finally {
-      whatsappButton.disabled = false;
-      whatsappButton.textContent = "Submit Booking";
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Book Appointment";
+      }
     }
   });
 }
+```
