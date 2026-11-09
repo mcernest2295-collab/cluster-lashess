@@ -15,17 +15,24 @@
 
 <body>
 
+  <!-- ANNOUNCEMENT -->
   <div class="announcement">
     ✨ 30% OFF SELECTED LASH SERVICES — BOOK WITH YVONNE TODAY ✨
   </div>
 
+  <!-- NAVIGATION -->
   <header class="nav">
     <a class="brand" href="#home">
       <span class="brand-mark">♡</span>
-      <span><b>Cluster</b> Lashes<small>BY YVONNE</small></span>
+      <span>
+        <b>Cluster</b> Lashes
+        <small>BY YVONNE</small>
+      </span>
     </a>
 
-    <button class="menu" type="button" aria-label="Open navigation">☰</button>
+    <button class="menu" type="button" aria-label="Open navigation">
+      ☰
+    </button>
 
     <nav>
       <a href="#home">Profile</a>
@@ -46,6 +53,7 @@
       </div>
 
       <div class="owner-copy">
+
         <p class="eyebrow">WELCOME TO MY BUSINESS</p>
 
         <h1>Cluster Lashes <span>by Yvonne.</span></h1>
@@ -64,7 +72,7 @@
 
         <p>
           <strong>Call:</strong>
-          <a href="tel:0241415612">024 141 5612</a>
+          <a href="tel:+233241415612">024 141 5612</a>
         </p>
 
         <div class="actions">
@@ -85,8 +93,8 @@
         <p class="signature">
           Quality lashes. Gentle touch. Beautiful you.
         </p>
-      </div>
 
+      </div>
     </section>
 
     <!-- INTRODUCTION -->
@@ -162,47 +170,67 @@
         <article class="service-card">
           <h3>Natural Set</h3>
           <p>Clean and subtle for an effortless everyday look.</p>
-          <div><del>GHS 40</del> <strong class="new-price">GHS 28</strong></div>
+          <div>
+            <del>GHS 40</del>
+            <strong class="new-price">GHS 28</strong>
+          </div>
         </article>
 
         <article class="service-card">
           <h3>Classic Set</h3>
           <p>Timeless definition with a polished finish.</p>
-          <div><del>GHS 50</del> <strong class="new-price">GHS 35</strong></div>
+          <div>
+            <del>GHS 50</del>
+            <strong class="new-price">GHS 35</strong>
+          </div>
         </article>
 
         <article class="service-card">
           <h3>Wispy Set</h3>
           <p>Fluffy, textured and soft with extra personality.</p>
-          <div><del>GHS 70</del> <strong class="new-price">GHS 49</strong></div>
+          <div>
+            <del>GHS 70</del>
+            <strong class="new-price">GHS 49</strong>
+          </div>
         </article>
 
         <article class="service-card">
           <h3>Hybrid Set</h3>
           <p>A balanced mix of definition and fluffy volume.</p>
-          <div><del>GHS 50</del> <strong class="new-price">GHS 35</strong></div>
+          <div>
+            <del>GHS 50</del>
+            <strong class="new-price">GHS 35</strong>
+          </div>
         </article>
 
         <article class="service-card">
           <h3>Volume Set</h3>
           <p>Fuller, bolder lashes for a glamorous finish.</p>
-          <div><del>GHS 70</del> <strong class="new-price">GHS 49</strong></div>
+          <div>
+            <del>GHS 70</del>
+            <strong class="new-price">GHS 49</strong>
+          </div>
         </article>
 
         <article class="service-card">
           <h3>Lash Refill</h3>
           <p>Refresh your existing set.</p>
-          <div><del>GHS 25</del> <strong class="new-price">GHS 17.50</strong></div>
+          <div>
+            <del>GHS 25</del>
+            <strong class="new-price">GHS 17.50</strong>
+          </div>
         </article>
 
         <article class="service-card">
           <h3>Lash Removal</h3>
           <p>Gentle removal when you're ready for a new look.</p>
-          <div><del>GHS 20</del> <strong class="new-price">GHS 14</strong></div>
+          <div>
+            <del>GHS 20</del>
+            <strong class="new-price">GHS 14</strong>
+          </div>
         </article>
 
       </div>
-
     </section>
 
     <!-- BOOKING SECTION -->
@@ -219,7 +247,7 @@
           Your booking details will be sent to Yvonne on WhatsApp.
         </p>
 
-        <a class="big-phone" href="tel:0241415612">
+        <a class="big-phone" href="tel:+233241415612">
           024 141 5612
         </a>
 
@@ -236,13 +264,14 @@
           <input
             type="text"
             id="customerName"
+            name="customerName"
             placeholder="Enter your name"
             required
           >
 
           <label for="serviceSelect">Choose Your Service</label>
 
-          <select id="serviceSelect" required>
+          <select id="serviceSelect" name="service" required>
             <option value="">Select a lash service</option>
             <option value="Natural Set">Natural Set — GHS 28</option>
             <option value="Classic Set">Classic Set — GHS 35</option>
@@ -258,6 +287,7 @@
           <input
             type="date"
             id="appointmentDate"
+            name="appointmentDate"
             required
           >
 
@@ -266,6 +296,7 @@
           <input
             type="time"
             id="appointmentTime"
+            name="appointmentTime"
             required
           >
 
@@ -288,6 +319,7 @@
 
         </form>
 
+        <!-- CONTACT DETAILS -->
         <div class="contact-row">
           <span>📍</span>
           <div>
@@ -321,11 +353,11 @@
         </div>
 
       </div>
-
     </section>
 
   </main>
 
+  <!-- FOOTER -->
   <footer>
 
     <div class="footer-brand">♡ Cluster Lashes</div>
@@ -339,7 +371,8 @@
 
   </footer>
 
-  <script src="script.js?v=2"></script>
+  <!-- UPDATED JAVASCRIPT -->
+  <script src="script.js?v=5"></script>
 
 </body>
 </html>
