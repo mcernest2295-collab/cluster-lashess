@@ -211,15 +211,38 @@ if (bookingForm) {
       "?text=" +
       encodeURIComponent(message);
 
-    // SHOW CONFIRMATION
+     // SHOW CONFIRMATION AND PROVIDE A DIRECT WHATSAPP LINK
 
-    showBookingMessage(
-      "Opening WhatsApp with your appointment details..."
-    );
+    if (bookingConfirmation) {
 
-    // OPEN WHATSAPP IN THE SAME TAB
+      bookingConfirmation.replaceChildren();
 
-    window.location.href = whatsappLink;
+      bookingConfirmation.textContent =
+        "Your booking details are ready. Tap below to continue.";
+
+      const whatsappAnchor = document.createElement("a");
+
+      whatsappAnchor.href = whatsappLink;
+      whatsappAnchor.target = "_blank";
+      whatsappAnchor.rel = "noopener noreferrer";
+      whatsappAnchor.textContent = "Tap here to open WhatsApp";
+
+      whatsappAnchor.style.display = "inline-block";
+      whatsappAnchor.style.marginTop = "12px";
+      whatsappAnchor.style.color = "#a9436b";
+      whatsappAnchor.style.fontWeight = "bold";
+      whatsappAnchor.style.textDecoration = "underline";
+
+      bookingConfirmation.appendChild(
+        document.createElement("br")
+      );
+
+      bookingConfirmation.appendChild(whatsappAnchor);
+
+      bookingConfirmation.classList.add("show");
+      bookingConfirmation.classList.remove("error");
+
+    }
 
   });
 
